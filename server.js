@@ -7,6 +7,8 @@ import eventRoutes from "./routes/eventRoutes.js";
 import cookieParser from "cookie-parser";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import { getEvents } from "./controllers/eventController.js";
+import Event from "./models/Event.js";
 dotenv.config();
 const app = express();
 app.use(cookieParser());
@@ -18,7 +20,17 @@ app.use(
     credentials: true,
   })
 );
-
+app.get("/",async (req,res)=>{
+  try {
+    const events=await Event.find();
+    res.status(200).json(events);  
+  } catch (error) {
+    res.status(500).json({message:"Server Error",error});
+  }
+  
+})
+// app.use("/",eventRoutes);
+app.get("/api/events",getEvents)
 app.use("/api/auth/", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/user",userRoutes);
