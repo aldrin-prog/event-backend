@@ -10,6 +10,7 @@ import userRoutes from "./routes/userRoutes.js";
 import { getEvents } from "./controllers/eventController.js";
 import Event from "./models/Event.js";
 dotenv.config();
+connectDB();
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
@@ -39,5 +40,5 @@ const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Listing to port ${port}`);
-  connectDB();
+  
 });
